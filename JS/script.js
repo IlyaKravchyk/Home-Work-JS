@@ -10,7 +10,7 @@
 // в виде объекта для дальнейшего сохранения в св-во data.
 
 const testObject = {
-   id: '1',
+   id: Math.round((Math.random()) * 100),
    name: 'Ilya',
    email: 'test@gamail.com',
    address: 'Minsk',
@@ -68,7 +68,8 @@ class User {
 class Contacts {
    constructor() {
       this.data = [];
-      this.add(testObject)
+      this.add(testObject);
+
    }
    add(object) {
       let user = new User(object);
@@ -76,7 +77,9 @@ class Contacts {
       console.log(this.data)
    }
    edit(id, obj) {
-
+      let editContacts = this.data.map((item) => {
+         item.id === id ? user.edit(obj) = item : alert('совпадений не найдено');
+      })
    }
 }
 
