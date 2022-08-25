@@ -1,0 +1,139 @@
+* {
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+}
+
+.contacts__wrapper {
+   padding-top: 20px;
+}
+
+.container {
+   margin: 0 auto;
+   max-width: 1240px;
+   width: 80%;
+}
+
+.contacts__items {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.contacts__item {
+   width: 100%;
+
+   width: 40%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   border: 2px solid #FA3131;
+}
+
+.contacts__item:first-child {
+   background-color: #A6FA51;
+   border-radius: 5px 5px 0 0;
+   padding: 25px;
+   box-sizing: border-box;
+}
+
+.contacts__item:nth-child(2) {
+   border-bottom: none;
+   border-top: none;
+   padding: 30px 0;
+   background-color: #DE9B31;
+}
+
+.contacts__item:nth-child(3) {
+   border-top: none;
+   border-radius: 0 0 5px 5px;
+   background-color: #DE9B31;
+}
+
+.contacts__title {}
+
+.contacts__btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 18px;
+   background-color: #38FF90;
+   padding: 10px 15px;
+   border: 2px solid #3148DE;
+   border-radius: 5px;
+   box-shadow: 1px 1px 7px #000;
+   cursor: pointer;
+}
+
+
+
+
+
+
+.modal__wrapper {
+   background-color: rgba(0, 0, 0, .85);
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.modal__title {
+   color: #FA3131;
+   font-size: 42px;
+   margin-bottom: 20px;
+}
+
+.modal__items {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 20px;
+}
+
+.modal__item:not(:last-child) {
+   padding: 5px 0;
+}
+
+.modal__item {
+   width: 300px;
+}
+
+.modal__text {
+   color: #fff;
+   font-size: 28px;
+
+}
+
+input {
+   width: 100%;
+   padding: 17px 0 17px 5px;
+   border-radius: 5px;
+}
+
+input::placeholder {
+   padding-left: 5px;
+
+}
+
+.modal__name {
+
+   height: 30px;
+}
+
+.btn__add {
+   font-size: 18px;
+   padding: 10px 20px;
+   box-shadow: 0px 0px 5px #fff;
+   border-radius: 5px;
+   border: 0px solid #000;
+   cursor: pointer;
+}
