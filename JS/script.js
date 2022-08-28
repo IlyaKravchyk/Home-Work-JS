@@ -67,7 +67,7 @@ class Contacts {
    }
 
    get() {
-      this.contactsData
+      return this.contactsData
    }
 
    remove(idUser) {
@@ -108,8 +108,6 @@ class ContactsApp extends Contacts {
       let siteDiv = document.createElement('div');
       siteDiv.classList.add('contacts');
       siteDiv.innerHTML = `
-                           <div class="contacts">
-                              <div class = "contacts__wrapper">
                                  <div class = "container">
                                     <div class = "contacts__items">
                                        <div class = "contacts__item">
@@ -118,15 +116,13 @@ class ContactsApp extends Contacts {
                                           </h1>
                                        </div>
                                        <div class = "contacts__item">
-                                          <button class ="contacts__btn" type = "submit">Добавить</button>
+                                          <button class ="contacts__btn btn" type = "submit">Добавить</button>
                                        </div>
                                        <div class = "contacts__item">
                                           <ul class="contacts__list"></ul>
                                        </div>
                                     </div>
                                  </div>
-                              </div>
-                           </div>
                            `
       site.appendChild(siteDiv);
       this.addEventListenerBtnAdd();
@@ -145,19 +141,19 @@ class ContactsApp extends Contacts {
                                     <div class = "modal__items">
                                        <div class = "modal__item">
                                           <div class ="modal__text">Имя:</div>
-                                          <input type = "text" class = "modal__name" value = "" placeholder = "Введите имя" required>
+                                          <input type = "text" class = "input__modal__name modal__input" placeholder = "Введите имя" required>
                                        </div>
                                        <div class = "modal__item">
                                           <div class ="modal__text">Email:</div>
-                                          <input type = "email" class = "modal__name" value = "" placeholder = "Введите email">
+                                          <input type = "email" class = "input__modal__email modal__input" placeholder = "Введите email">
                                        </div>
                                        <div class = "modal__item">
                                           <div class ="modal__text">Адрес:</div>
-                                          <input type = "text" class = "modal__name" value = "" placeholder = "Введите адрес">
+                                          <input type = "text" class = "input__modal__address modal__input" placeholder = "Введите адрес">
                                        </div>
                                        <div class = "modal__item">
                                           <div class ="modal__text">Номер телефона:</div>
-                                          <input type = "tel" class = "modal__name" value = "" placeholder = "Введите телефон" reuired>
+                                          <input type = "tel" class = "input__modal__phone modal__input" placeholder = "Введите телефон" reuired>
                                        </div>
                                     </div>
                                     <div class = "modal__btn">
@@ -174,14 +170,146 @@ class ContactsApp extends Contacts {
 
    }
    onAdd() {
-      let input = document.querySelectorAll('.modal__name')
-      let name = input[0].value
-      let email = input[1].value
-      let adress = input[2].value
-      let phone = input[3].value
-      console.log(name, email, adress, phone);
-      this.add({ name, email, adress, phone })
-      this.get()
+      let name = document.querySelector('.input__modal__name').value
+      let email = document.querySelector('.input__modal__email').value
+      let address = document.querySelector('.input__modal__address').value
+      let phone = document.querySelector('.input__modal__phone').value
+      let id = `${Math.round(Math.random() * 100)}`
+      this.add({ id, name, email, address, phone });
+      this.show();
+   }
+
+   show() {
+      const ul = document.querySelector('.contacts__list');
+      let li = '';
+      const data = this.get();
+      data.forEach(({ data: { id, name, email, address, phone } }) => {
+         li += `
+                  <li class = "contacts__field">
+                     <span class = "contacts__name contacts__text">
+                        Name:
+                     </span>
+                     <span class = "contacts__user__name contacts__value">
+                        ${name}
+                     </span>
+                  </li>
+
+                           <li class = "contacts__field">
+                     <span class = "contacts__email contacts__text">
+                        Email:
+                     </span>
+                     <span class = "contacts__user__email contacts__value">
+                        ${email}
+                     </span>
+                  </li>
+
+                           <li class = "contacts__field">
+                     <span class = "contacts__address contacts__text">
+                     Address:
+                     </span>
+                     <span class = "contacts__user__address contacts__value">
+                        ${address}
+                     </span>
+                  </li>
+
+                           <li class = "contacts__field">
+                     <span class = "contacts__phone contacts__text">
+                        Phone:
+                     </span>
+                     <span class = "contacts__user__phone contacts__value">
+                        ${phone}
+                     </span>
+                  </li>
+                  <div class = "contacts__button">
+                     <button type = "submit" data-edit = "${id}" class = "btn__edit btn">Изменить</button>
+                     <button type = "submit" data-delete = "${id}" class = "btn__delete btn">Удалить</button>
+                  </div>
+               `
+         ul.innerHTML = li;
+      })
+      this.addEventListenerBtnDelete()
+      this.addEventListenerBtnEdit()
+   }
+
+
+   addEventListenerBtnDelete() {
+      let btnDelete = document.querySelectorAll('.btn__delete');
+      btnDelete.forEach((btn) => {
+         btn.addEventListener('click', (e) => {
+            this.onRemove(e.target.dataset.delete);
+         })
+      })
+   }
+
+
+
+   onRemove(deleteId) {
+      this.remove(deleteId);
+      this.show();
+   }
+
+
+
+   addEventListenerBtnEdit() {
+      let btnEdit = document.querySelectorAll('.btn__edit')
+      btnEdit.forEach((btn) => {
+         btn.addEventListener('click', (e) => {
+            const editUserId = e.target.dataset.edit;
+            this.editModal(editUserId);
+         })
+      })
+   }
+
+   editModal(editUserId) {
+
+      const data = this.get();
+      console.log(data);
+      data.forEach(({ data: { id, name, email, address, phone } }) => {
+         if (id === editUserId) {
+            let editModalDiv = document.createElement('div');
+            editModalDiv.classList.add('edit__modal');
+            editModalDiv.innerHTML = ` <div class = "modal__wrapper">
+                                          <div class ="modal__title">
+                                          Введите данные:
+                                          </div>
+                                          <div class = "modal__items">
+                                             <div class = "modal__item">
+                                                <div class ="modal__text">Имя:</div>
+                                                <input type = "text" class = "input__modal__name modal__input" placeholder = "Введите имя" value = "${name}" required>
+                                             </div>
+                                             <div class = "modal__item">
+                                                <div class ="modal__text">Email:</div>
+                                                <input type = "email" class = "input__modal__email modal__input" placeholder = "Введите email" value = "${email}">
+                                             </div>
+                                             <div class = "modal__item">
+                                                <div class ="modal__text">Адрес:</div>
+                                                <input type = "text" class = "input__modal__address modal__input" placeholder = "Введите адрес" value = "${address}" >
+                                             </div>
+                                             <div class = "modal__item">
+                                                <div class ="modal__text">Номер телефона:</div>
+                                                <input type = "tel" class = "input__modal__phone modal__input" placeholder = "Введите телефон"value = " ${phone}" reuired>
+                                             </div>
+                                          </div>
+                                          <div class = "modal__btn">
+                                             <button class ="btn__edit-modal btn" type = "submit">Изменить</button>
+                                          </div>
+                                       </div>
+                                    `
+            document.body.appendChild(editModalDiv);
+            let buttonEdit = document.querySelector('.btn__edit-modal');
+            buttonEdit.addEventListener('click', () => {
+
+               let name = document.querySelector('.input__modal__name').value
+               let email = document.querySelector('.input__modal__email').value
+               let address = document.querySelector('.input__modal__address').value
+               let phone = document.querySelector('.input__modal__phone').value
+
+               this.edit(editUserId, { name, email, address, phone });
+               editModalDiv.remove();
+               this.show();
+            })
+         }
+      })
    }
 }
 

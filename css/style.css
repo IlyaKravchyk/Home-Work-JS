@@ -2,11 +2,9 @@
    box-sizing: border-box;
    padding: 0;
    margin: 0;
+   list-style: none;
 }
 
-.contacts__wrapper {
-   padding-top: 20px;
-}
 
 .container {
    margin: 0 auto;
@@ -19,57 +17,45 @@
    flex-direction: column;
    align-items: center;
    justify-content: center;
+   background: orange;
+   max-width: 500px;
+   min-height: 30vh;
+   margin: 0 auto;
+   border-radius: 10px;
+   overflow: hidden;
 }
 
-.contacts__item {
-   width: 100%;
-
-   width: 40%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-
-   border: 2px solid #FA3131;
-}
 
 .contacts__item:first-child {
-   background-color: #A6FA51;
-   border-radius: 5px 5px 0 0;
-   padding: 25px;
-   box-sizing: border-box;
+   padding: 32px;
+   color: #093309;
 }
 
 .contacts__item:nth-child(2) {
    border-bottom: none;
    border-top: none;
    padding: 30px 0;
-   background-color: #DE9B31;
+
 }
 
 .contacts__item:nth-child(3) {
-   border-top: none;
-   border-radius: 0 0 5px 5px;
-   background-color: #DE9B31;
+   padding: 0 0 30px 30px;
 }
 
-.contacts__title {}
 
-.contacts__btn {
+.btn {
    display: flex;
    align-items: center;
    justify-content: center;
    font-size: 18px;
-   background-color: #38FF90;
-   padding: 10px 15px;
-   border: 2px solid #3148DE;
-   border-radius: 5px;
-   box-shadow: 1px 1px 7px #000;
+   padding: 3px 10px;
+   min-width: 100px;
    cursor: pointer;
 }
 
-
-
-
+.contacts__btn {
+   padding: 10px 15px;
+}
 
 
 .modal__wrapper {
@@ -125,9 +111,9 @@ input::placeholder {
 }
 
 .modal__name {
-
    height: 30px;
 }
+
 
 .btn__add {
    font-size: 18px;
@@ -136,4 +122,40 @@ input::placeholder {
    border-radius: 5px;
    border: 0px solid #000;
    cursor: pointer;
+}
+
+
+
+.contacts__list {
+   width: 400px
+}
+
+.contacts__field {
+   margin-bottom: 10px;
+}
+
+.contacts__text {
+   font-size: 22px;
+}
+
+.contacts__value {
+   font-size: 20px;
+   padding: 3px;
+}
+
+.contacts__button {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   margin-bottom: 20px;
+}
+
+.btn__edit {
+   margin-right: 20px;
+}
+
+.btn__delete:hover {
+   background-color: red;
+   color: #000;
+   transition: .3s;
 }
