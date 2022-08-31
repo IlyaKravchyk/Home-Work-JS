@@ -102,6 +102,7 @@ class ContactsApp extends Contacts {
    constructor() {
       super()
       this.init();
+      this.show()
    }
    init() {
       let site = document.querySelector('.site');
@@ -176,13 +177,14 @@ class ContactsApp extends Contacts {
       let phone = document.querySelector('.input__modal__phone').value
       let id = `${Math.round(Math.random() * 100)}`
       this.add({ id, name, email, address, phone });
+      this.storage = this.contactsData;
       this.show();
    }
 
    show() {
       const ul = document.querySelector('.contacts__list');
       let li = '';
-      const data = this.get();
+      const data = this.storage;
       data.forEach(({ data: { id, name, email, address, phone } }) => {
          li += `
                   <li class = "contacts__field">
@@ -225,8 +227,8 @@ class ContactsApp extends Contacts {
                      <button type = "submit" data-delete = "${id}" class = "btn__delete btn">Удалить</button>
                   </div>
                `
-         ul.innerHTML = li;
       })
+      ul.innerHTML = li;
       this.addEventListenerBtnDelete()
       this.addEventListenerBtnEdit()
    }
@@ -241,10 +243,9 @@ class ContactsApp extends Contacts {
       })
    }
 
-
-
    onRemove(deleteId) {
       this.remove(deleteId);
+      this.storage = this.contactsData;
       this.show();
    }
 
@@ -305,12 +306,26 @@ class ContactsApp extends Contacts {
                let phone = document.querySelector('.input__modal__phone').value
 
                this.edit(editUserId, { name, email, address, phone });
+               this.storage = this.contactsData;
                editModalDiv.remove();
                this.show();
             })
          }
       })
    }
+   set storage(newData) {
+      localStorage.setItem('localStorageData', JSON.stringify(newData));
+   }
+   get storage() {
+      let storageData = localStorage.getItem('localStorageData');
+      let localStorageArray = [];
+      if (storageData.length > 0) {
+         localStorageArray = JSON.parse(storageData);
+         console.log(localStorageArray);
+         return localStorageArray;
+      }
+   }
+
 }
 
 window.addEventListener('load', () => {
