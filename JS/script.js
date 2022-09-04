@@ -44,7 +44,7 @@ class User {
 class Contacts {
 
    constructor() {
-      this.contactsData = []
+      this.contactsData = [];
    }
 
    add(userData) {
@@ -101,10 +101,12 @@ const contacts = new Contacts()
 class ContactsApp extends Contacts {
    constructor() {
       super()
+      this.contactsData = this.storage || [];
       this.init();
-      this.show()
+      this.show();
    }
    init() {
+      console.log(this.contactsData);
       let site = document.querySelector('.site');
       let siteDiv = document.createElement('div');
       siteDiv.classList.add('contacts');
@@ -184,8 +186,7 @@ class ContactsApp extends Contacts {
    show() {
       const ul = document.querySelector('.contacts__list');
       let li = '';
-      const data = this.storage;
-      data.forEach(({ data: { id, name, email, address, phone } }) => {
+      this.contactsData.forEach(({ data: { id, name, email, address, phone } }) => {
          li += `
                   <li class = "contacts__field">
                      <span class = "contacts__name contacts__text">
@@ -306,24 +307,33 @@ class ContactsApp extends Contacts {
                let phone = document.querySelector('.input__modal__phone').value
 
                this.edit(editUserId, { name, email, address, phone });
-               this.storage = this.contactsData;
                editModalDiv.remove();
+               this.storage = this.contactsData;
                this.show();
             })
          }
       })
    }
-   set storage(newData) {
-      localStorage.setItem('localStorageData', JSON.stringify(newData));
-   }
    get storage() {
       let storageData = localStorage.getItem('localStorageData');
       let localStorageArray = [];
-      if (storageData.length > 0) {
+      if (storageData !== null) {
          localStorageArray = JSON.parse(storageData);
          console.log(localStorageArray);
-         return localStorageArray;
+         localStorageArray.map((item) => {
+            let itemData = item.data;
+            item = new User(itemData)
+            console.log(itemData);
+            return item
+         })
+      } else {
+         return undefined
       }
+      return localStorageArray;
+   }
+
+   set storage(newData) {
+      localStorage.setItem('localStorageData', JSON.stringify(newData));
    }
 
 }
